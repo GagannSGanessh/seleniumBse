@@ -18,6 +18,9 @@ public class BaseTest {
 	public void setup() {
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--start-maximized");
+		options.addArguments("--headless=new");
+		options.addArguments("--disable-gpu");
+		options.addArguments("--window-size=1920,1080");
 		driver = new ChromeDriver(options);
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		helper = new helper(driver);
