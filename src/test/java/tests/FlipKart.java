@@ -6,40 +6,43 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import base.BaseTest;
-import utils.screenShot;
+import listner.TestListener;
 
+
+
+@Listeners(TestListener.class)
 public class FlipKart extends BaseTest {
 
 	@Test(enabled = false)
 	void siteHome() {
-		driver.get("https://www.flipkart.com");
+		getDriver().get("https://www.flipkart.com");
 	}
 
 	@Test
 	void searchsort() throws InterruptedException {
-		driver.get("https://www.flipkart.com");
-		driver.findElement(By.xpath("//span[@role='button']")).click();
+		getDriver().get("https://www.flipkart.com");
+		getDriver().findElement(By.xpath("//span[@role='button']")).click();
 
-		driver.findElement(By.name("q")).sendKeys("Dostoyevsky", Keys.ENTER);
+		getDriver().findElement(By.name("q")).sendKeys("Dostoyevsky", Keys.ENTER);
 
-		driver.findElement(By.xpath("//span[.='Sort By']/following-sibling::div[.='Price -- Low to High']")).click();
+		getDriver().findElement(By.xpath("//span[.='Sort By']/following-sibling::div[.='Price -- Low to High']")).click();
 
-		WebElement product = driver.findElement(By.xpath("(//img[@loading='eager'])[3]/ancestor::a"));
-		screenShot.captureScreenShot(driver, "AfterSearch");
+		WebElement product = getDriver().findElement(By.xpath("(//img[@loading='eager'])[3]/ancestor::a"));
 
-		String original = driver.getWindowHandle();
+		String original = getDriver().getWindowHandle();
 		helper.opennewtab(product);
 
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
 		wait.until(d -> d.getWindowHandles().size() > 1);
 
-		for (String w : driver.getWindowHandles()) {
+		for (String w : getDriver().getWindowHandles()) {
 			if (!w.equals(original)) {
-				driver.switchTo().window(w);
+				getDriver().switchTo().window(w);
 				break;
 			}
 		}
